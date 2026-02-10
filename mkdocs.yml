@@ -1,0 +1,52 @@
+site_name: KotaJá Docs
+site_description: Documentação do projeto KotaJá
+site_author: KotaJá
+repo_name: KotaJa
+repo_url: https://github.com/milenaaires/KotaJa
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: pt
+  logo: assets/logo/fusca.png
+  favicon: assets/logo/fusca.png
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.follow
+  palette:
+    # Tema claro
+    - scheme: default
+      primary: orange
+      accent: orange
+      toggle:
+        icon: material/weather-night
+        name: Alternar para modo escuro
+
+    # Tema escuro
+    - scheme: slate
+      primary: orange
+      accent: orange
+      toggle:
+        icon: material/weather-sunny
+        name: Alternar para modo claro
+        
+nav:
+  - Início: index.md
+  - Documentação:
+      - Visão e Escopo: 01-visao-escopo.md
+      - Papéis e Responsabilidades: 02-papeis-responsabilidades.md
+      - Fluxos Funcionais: 03-fluxos-funcionais.md
+      - Requisitos: 04-requisitos.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - attr_list
+  - md_in_html
+
+extra:
+  generator: false
