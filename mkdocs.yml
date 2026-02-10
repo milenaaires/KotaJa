@@ -1,4 +1,4 @@
-site_name: KotaJá Docs
+site_name: KotaJá 
 site_description: Documentação do projeto KotaJá
 site_author: KotaJá
 repo_name: KotaJa
@@ -88,4 +88,5 @@ extra:
 extra_javascript:
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
   - javascripts/extra.js
+
 
