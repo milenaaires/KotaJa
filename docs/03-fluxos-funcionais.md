@@ -25,6 +25,22 @@ O cadastro de lojas pode ser iniciado por lojistas ou pesquisadores. Todas as lo
 5. O coordenador aprova ou rejeita a loja
 6. O status da loja é atualizado para **APROVADA** ou **REJEITADA**
 
+<pre class="mermaid">
+flowchart TD
+  Start([Inicio]) --> Sub["Submeter loja + documentos"]
+  Sub --> Pend["Status: PENDENTE"]
+  Pend --> Aval["Coordenador avalia submissao"]
+
+  Aval -->|Aprova| Criar["Cria/atualiza registro oficial da loja"]
+  Criar --> Aprov["Status final: APROVADA"]
+
+  Aval -->|Rejeita| Rej["Status final: REJEITADA (com motivo)"]
+
+  Aprov --> End([Fim])
+  Rej --> End
+</pre>
+
+
 ### Regras
 - Apenas lojas aprovadas podem receber coletas de preços
 - Toda decisão deve registrar responsável e data
@@ -100,6 +116,20 @@ Usuários públicos podem consultar valores médios de veículos sem necessidade
 - A consulta não exige login
 - Todas as consultas devem ser registradas
 - Caso não existam dados, o sistema deve informar claramente
+
+<pre class="mermaid">
+flowchart TD
+  Start([Inicio]) --> Filtros["Usuario seleciona filtros (marca/modelo/variante/regiao)"]
+  Filtros --> Busca["Sistema consulta medias mensais (variante + regiao)"]
+
+  Busca -->|Encontrou| Exibe["Exibe valor medio mensal"]
+  Busca -->|Nao encontrou| Sem["Exibe: Sem resultados para os filtros"]
+
+  Exibe --> Log["Registra log da consulta (filtros + timestamp)"]
+  Sem --> Log
+
+  Log --> End([Fim])
+</pre>
 
 ---
 

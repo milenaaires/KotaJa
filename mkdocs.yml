@@ -35,11 +35,36 @@ theme:
         
 nav:
   - Início: index.md
-  - Documentação:
+
+  - Especificação Funcional:
       - Visão e Escopo: 01-visao-escopo.md
       - Papéis e Responsabilidades: 02-papeis-responsabilidades.md
       - Fluxos Funcionais: 03-fluxos-funcionais.md
       - Requisitos: 04-requisitos.md
+
+  - Modelo de Dados:
+      - Modelagem (Entidades): 05-modelagem-entidades.md
+      - ERD: 06-erd.md
+      - Regras e Índices: 07-regras-integridade-indices.md
+      - Dicionário de Dados: 08-dicionario-dados.md
+      - Modelo Físico (DDL): 09-modelo-fisico-ddl.md
+      - Notas de Modelagem: 10-notas-modelagem.md
+
+  - Arquitetura:
+      - Arquitetura Alto Nível: 11-arquitetura-alto-nivel.md
+      - Arquitetura de Componentes: 12-componentes.md
+      - Estrutura de Pastas: 13-estrutura-pastas.md
+
+  - Technical Design:
+      - Fluxo Técnico (Consulta): 14-fluxo-tecnico-consulta.md
+      - Contratos (Services/Repos): 15-contratos-servicos-repos.md
+      - Estratégia Técnica: 16-estrategia-tecnica.md
+      - Decisões de Design: 17-decisoes-design.md
+      - Estratégia de Testes: 18-estrategia-testes.md
+      - Batch Mensal (Design): 19-batch-design.md
+
+  - UX / Protótipos:
+      - Protótipos Figma: 20-prototipos.md
 
 markdown_extensions:
   - admonition
@@ -47,6 +72,20 @@ markdown_extensions:
       permalink: true
   - attr_list
   - md_in_html
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - search
+  - glightbox
 
 extra:
   generator: false
+
+extra_javascript:
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+  - javascripts/extra.js
+

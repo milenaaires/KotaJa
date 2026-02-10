@@ -124,6 +124,39 @@ Responsável pela consulta das informações disponibilizadas pelo sistema.
 
 O sistema adotará modelo baseado em papéis (RBAC), onde cada usuário possui permissões associadas ao seu perfil operacional.
 
+<pre class="mermaid">
+flowchart LR
+
+  subgraph Roles["Papeis"]
+    A["Admin"]
+    G["Gerente"]
+    C["Coordenador"]
+    L["Lojista"]
+    P["Pesquisador"]
+    U["Usuario Publico"]
+  end
+
+  subgraph Perms["Permissoes"]
+    P1["Gerenciar usuarios"]
+    P2["Gerenciar catalogo"]
+    P3["Cadastrar loja"]
+    P4["Aprovar loja"]
+    P5["Planejamento semanal"]
+    P6["Registrar preco"]
+    P7["Consultar cotacao"]
+  end
+
+  A --> P1
+  G --> P2
+  L --> P3
+  P --> P3
+  C --> P4
+  C --> P5
+  P --> P6
+  U --> P7
+</pre>
+
+
 ---
 
 ## Interação Entre Papéis

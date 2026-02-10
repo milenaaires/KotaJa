@@ -63,6 +63,23 @@ A interface pública de consulta deve ser simples, clara e acessível para usuá
 ### RNF07 — Persistência
 Os dados devem ser armazenados em banco de dados relacional, garantindo integridade e consistência.
 
-## Observações Finais
+## Priorização (escopo do trabalho)
 
-Os requisitos descritos neste documento refletem o escopo definido para o projeto e servem como referência para as próximas etapas de modelagem e projeto técnico.
+## Responsáveis por requisito 
+
+| Requisito | Papel principal |
+|---|---|
+| RF01 | Admin |
+| RF02 | Gerente |
+| RF03 | Lojista / Pesquisador |
+| RF04 | Coordenador |
+| RF05 | Coordenador |
+| RF06 | Pesquisador |
+| RF07 | Sistema (Batch) |
+| RF08 | Usuário Público |
+| RF09 | Sistema |
+
+
+- **MVP (documentação, modelagem e definição)**: RF01 a RF09.
+- **Implementação prática neste projeto**: RF08 (Consulta pública) e RF09 (Registro de consultas).
+- As demais funcionalidades são especificadas e modeladas, mas não serão implementadas nesta fase.

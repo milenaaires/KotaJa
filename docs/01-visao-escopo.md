@@ -2,6 +2,9 @@
   <img src="/assets/logo/logopreta.png" width="300">
 </p>
 
+Desafio Instituto Minerva
+
+Autor(a): Milena Beatriz Aires de Santana Dias
 
 Sistema de captura, organização e consulta pública de preços de veículos coletados em lojas físicas, com gerenciamento operacional por regiões e planejamento semanal de pesquisas.
 
@@ -61,6 +64,24 @@ O fluxo principal do sistema ocorre da seguinte forma:
 4. Pesquisadores registram os preços observados
 5. O sistema processa os dados coletados e calcula médias mensais
 6. Usuários públicos realizam consultas de cotação
+
+<div class="mermaid">
+flowchart LR
+  Publico["Usuario Publico"] -->|"Consulta cotacao"| KotaJa["KotaJa"]
+
+  Admin["Admin"] -->|"Gerencia usuarios"| KotaJa
+  Gerente["Gerente"] -->|"Mantem catalogo"| KotaJa
+  Coord["Coordenador Regional"] -->|"Aprova lojas e planeja semana"| KotaJa
+  Lojista["Lojista"] -->|"Submete loja e documentos"| KotaJa
+  Pesq["Pesquisador"] -->|"Registra coletas e sugere lojas"| KotaJa
+
+  KotaJa -->|"Escreve dados"| DB[("Banco de Dados")]
+  DB -->|"Le dados"| KotaJa
+
+  KotaJa --> Batch["Batch mensal (medias)"]
+  Batch -->|"Atualiza medias mensais"| DB
+  KotaJa -->|"Registra log de consulta"| DB
+</div>
 
 ---
 
