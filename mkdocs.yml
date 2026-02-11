@@ -64,7 +64,7 @@ nav:
       - Batch Mensal (Design): 19-batch-design.md
 
   - UX / Protótipos:
-      - Protótipos Figma: 20-prototipos.md
+      - Protótipos: 20-prototipos.md
 
 markdown_extensions:
   - admonition
@@ -88,5 +88,6 @@ extra:
 extra_javascript:
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
   - javascripts/extra.js
+
 
 
