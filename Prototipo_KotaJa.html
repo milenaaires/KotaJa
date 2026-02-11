@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KotaJá - Protótipo MVP</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0b0f14;
+            --surface-color: #161b22;
+            --surface-hover: #1f252e;
+            --primary-color: #ff8a00;
+            --primary-hover: #e07900;
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
+            --border-color: #30363d;
+            --success: #238636;
+            --danger: #da3633;
+            --warning: #d29922;
+            --radius: 8px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.5);
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 { margin-bottom: 0.5rem; font-weight: 600; }
+        h1 { font-size: 1.8rem; }
+        p { color: var(--text-muted); margin-bottom: 1rem; }
+        small { font-size: 0.85rem; }
+
+        /* --- LAYOUT COMPONENTS --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+
+        /* Topbar */
+        header {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            color: var(--primary-color); 
+            display: flex; 
+            align-items: center; 
+            gap: 5px;
+        }
+        .badges { display: flex; gap: 10px; }
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .badge.active { color: #7ee787; border-color: #238636; background: rgba(35, 134, 54, 0.1); }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        nav a:hover, nav a.active { color: var(--primary-color); }
+
+        /* --- UI ELEMENTS --- */
+        .btn {
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #000; /* Contraste melhor no laranja */
+        }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-outline {
+            background: transparent;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .btn-outline:hover { background: rgba(255, 138, 0, 0.1); }
+        .btn-ghost { background: transparent; color: var(--text-muted); }
+        .btn-danger { background: rgba(218, 54, 51, 0.1); color: var(--danger); border-color: var(--danger); }
+        .btn-sm { padding: 4px 10px; font-size: 0.85rem; }
+
+        .card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Forms */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.9rem; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-main);
+            font-family: inherit;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Tables */
+        .table-responsive { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th { color: var(--text-muted); font-weight: 600; }
+        tr:hover td { background-color: rgba(255,255,255,0.02); }
+
+        /* Tabs */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Status Tags */
+        .tag { padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+        .tag.pending { background: rgba(210, 153, 34, 0.2); color: var(--warning); }
+        .tag.approved, .tag.success { background: rgba(35, 134, 54, 0.2); color: #7ee787; }
+        .tag.rejected, .tag.failed { background: rgba(218, 54, 51, 0.2); color: var(--danger); }
+        .tag.running { background: rgba(56, 139, 253, 0.2); color: #58a6ff; }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 1rem; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Toast */
+        #toast-container {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+        }
+        .toast {
+            background: var(--surface-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <div class="logo">🚙 KotaJá</div>
+                <div class="badges desktop-only">
+                    <span class="badge active">MVP 1.0</span>
+                    <span class="badge active">🟢 DB Conectado</span>
+                    <span class="badge">📚 Docs</span>
+                </div>
+            </div>
+            <nav>
+                <ul id="main-nav">
+                    <li><a onclick="router.navigate('home')">Início</a></li>
+                    <li><a onclick="router.navigate('public-search')">Consulta Pública</a></li>
+                    <li><a onclick="router.navigate('login')" id="nav-login">Login</a></li>
+                    <li><a onclick="router.navigate('about')">Sobre</a></li>
+                </ul>
+            </nav>
+            <div id="user-display" class="hidden" style="margin-left: 20px; font-size: 0.9rem;">
+                <span id="user-name" style="color: var(--primary-color);"></span>
+                <button class="btn btn-sm btn-ghost" onclick="app.logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-root" class="container">
+        </main>
+
+    <div id="toast-container"></div>
+
+    <script>
+        /* --- MOCK DATA --- */
+        const DB = {
+            users: [
+                { id: 1, name: "Admin Master", email: "admin@kotaja.com", role: "ADMIN", status: "ACTIVE" },
+                { id: 2, name: "Gerente Geral", email: "gerente@kotaja.com", role: "MANAGER", status: "ACTIVE" },
+                { id: 3, name: "Coord. João (SP)", email: "joao@kotaja.com", role: "COORDINATOR", regionId: "SP", status: "ACTIVE" },
+                { id: 4, name: "Pesquisador Pedro", email: "pedro@kotaja.com", role: "RESEARCHER", regionId: "SP", status: "ACTIVE" },
+                { id: 5, name: "Lojista Marcos", email: "marcos@loja.com", role: "SHOPKEEPER", status: "ACTIVE", storeId: null }
+            ],
+            regions: [
+                { id: "SP", name: "São Paulo - Capital" },
+                { id: "RJ", name: "Rio de Janeiro - Capital" },
+                { id: "MG", name: "Belo Horizonte" }
+            ],
+            brands: [
+                { id: 1, name: "Chevrolet" },
+                { id: 2, name: "Volkswagen" },
+                { id: 3, name: "Fiat" }
+            ],
+            models: [
+                { id: 1, brandId: 1, name: "Onix" },
+                { id: 2, brandId: 2, name: "Gol" },
+                { id: 3, brandId: 3, name: "Argo" }
+            ],
+            variants: [
+                { id: 1, modelId: 1, label: "Onix 1.0 Turbo LT 2024", year: 2024, fuel: "Flex", transmission: "Auto" },
+                { id: 2, modelId: 1, label: "Onix 1.0 Aspirado MT 2023", year: 2023, fuel: "Flex", transmission: "Manual" },
+                { id: 3, modelId: 2, label: "Gol 1.6 MSI 2022", year: 2022, fuel: "Flex", transmission: "Manual" }
+            ],
+            stores: [
+                { id: 100, name: "Concessionária SP Centro", ownerId: 5, regionId: "SP", status: "APPROVED", city: "São Paulo", uf: "SP" },
+                { id: 101, name: "Loja do Bairro Sul", ownerId: 99, regionId: "SP", status: "PENDING", city: "São Paulo", uf: "SP" }
+            ],
+            assignments: [], // { id, week, researcherId, storeId, status }
+            observations: [], // { id, assignmentId, variantId, price, details, date }
+            publicLogs: [], // { date, filters, result }
+            batchRuns: [], // { id, date, status, summary }
+            monthlyAverages: [] // { regionId, variantId, avgPrice, month }
+        };
+
+        /* --- STATE MANAGEMENT --- */
+        const state = {
+            currentUser: null,
+            currentView: 'home'
+        };
+
+        /* --- ROUTER & VIEWS --- */
+        const router = {
+            navigate: (viewId) => {
+                // Auth Guard
+                if (['panel-admin', 'panel-manager', 'panel-coord', 'panel-shop', 'panel-researcher'].includes(viewId)) {
+                    if (!state.currentUser) {
+                        app.showToast("Faça login para acessar esta área.");
+                        router.navigate('login');
+                        return;
+                    }
+                }
+
+                state.currentView = viewId;
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                
+                // Render View
+                const root = document.getElementById('app-root');
+                root.innerHTML = '';
+                
+                switch(viewId) {
+                    case 'home': views.renderHome(root); break;
+                    case 'public-search': views.renderPublicSearch(root); break;
+                    case 'login': views.renderLogin(root); break;
+                    case 'about': views.renderAbout(root); break;
+                    // Protected Views
+                    case 'panel-admin': views.renderAdminPanel(root); break;
+                    case 'panel-manager': views.renderManagerPanel(root); break;
+                    case 'panel-coord': views.renderCoordPanel(root); break;
+                    case 'panel-shop': views.renderShopPanel(root); break;
+                    case 'panel-researcher': views.renderResearcherPanel(root); break;
+                    case 'panel-batch': views.renderBatchPanel(root); break;
+                    default: views.renderHome(root);
+                }
+                
+                // Update Nav UI
+                app.updateNav();
+            }
+        };
+
+        /* --- VIEWS RENDERERS --- */
+        const views = {
+            renderHome: (container) => {
+                container.innerHTML = `
+                    <div class="text-center" style="padding: 40px 0;">
+                        <h1 style="font-size: 3rem; margin-bottom: 20px;">Cotação Automotiva <span style="color: var(--primary-color)">Inteligente</span></h1>
+                        <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px;">
+                            O KotaJá conecta lojistas, pesquisadores e consumidores para trazer transparência ao mercado automotivo.
+                            Dados auditados, atualizados semanalmente.
+                        </p>
+                        <div class="grid-3">
+                            <div class="card">
+                                <h3>🔍 Consulta Pública</h3>
+                                <p>Acesse médias de mercado baseadas em coletas reais e auditadas.</p>
+                                <button class="btn btn-outline" onclick="router.navigate('public-search')">Consultar Agora</button>
+                            </div>
+                            <div class="card">
+                                <h3>📊 Dados Reais</h3>
+                                <p>Coleta presencial em lojas verificadas por coordenadores regionais.</p>
+                            </div>
+                            <div class="card">
+                                <h3>⚙️ Batch Mensal</h3>
+                                <p>Processamento robusto para cálculo de indicadores de mercado.</p>
+                            </div>
+                        </div>
+                        <div class="card mt-2">
+                            <h4>Roadmap do Projeto</h4>
+                            <div style="display:flex; justify-content:space-around; margin-top:15px; flex-wrap: wrap;">
+                                <span class="tag success">✅ Consulta Pública</span>
+                                <span class="tag success">✅ Login RBAC</span>
+                                <span class="tag success">✅ Coleta de Dados</span>
+                                <span class="tag pending">🔄 Integração API Externa</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderPublicSearch: (container) => {
+                // Mock historical list
+                const logsHtml = DB.publicLogs.map(l => `
+                    <tr>
+                        <td>${new Date(l.date).toLocaleString()}</td>
+                        <td>${l.filters}</td>
+                        <td>R$ ${l.result}</td>
+                    </tr>
+                `).join('') || '<tr><td colspan="3">Nenhuma consulta recente.</td></tr>';
+
+                container.innerHTML = `
+                    <h2>🔍 Consulta Pública de Preços</h2>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>Filtros</h3>
+                            <div class="form-group">
+                                <label>Região</label>
+                                <select id="search-region">
+                                    ${DB.regions.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Variante do Veículo</label>
+                                <select id="search-variant">
+                                    ${DB.variants.map(v => `<option value="${v.id}">${v.label}</option>`).join('')}
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="app.performPublicSearch()">Consultar Preço Médio</button>
+                        </div>
+                        
+                        <div class="card" id="search-result-card" style="display:none; text-align:center; border-color: var(--primary-color);">
+                            <h3>Resultado da Cotação</h3>
+                            <h1 style="font-size: 3rem; color: var(--primary-color); margin: 20px 0;" id="search-price-display">...</h1>
+                            <p id="search-detail-display"></p>
+                            <small>Dados baseados em coletas auditadas.</small>
+                        </div>
+                    </div>
+
+                    <div class="card mt-2">
+                        <h3>Histórico de Consultas (Auditoria)</h3>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Data/Hora</th><th>Filtros</th><th>Resultado</th></tr></thead>
+                                <tbody id="search-logs-body">${logsHtml}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderLogin: (container) => {
+                container.innerHTML = `
+                    <div style="max-width: 400px; margin: 40px auto;">
+                        <div class="card">
+                            <h2 class="text-center">Acesso ao Sistema</h2>
+                            <p class="text-center">Use as credenciais abaixo para testar</p>
+                            
+                            <div class="form-group">
+                                <label>E-mail</label>
+                                <input type="email" id="login-email" value="admin@kotaja.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Senha</label>
+                                <input type="password" value="123456">
+                            </div>
+                            <button class="btn btn-primary" style="width:100%" onclick="app.login()">Entrar</button>
+
+                            <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 10px;">
+                                <small>Contas de Teste (clique para preencher):</small>
+                                <div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:5px;">
+                                    <button class="btn btn-sm btn-outline" onclick="document.getElementById('login-email').value='admin@kotaja.com'">Admin</button>
+                                    <button class="btn btn-sm btn-outline" onclick="document.getElementById('login-email').value='gerente@kotaja.com'">Gerente</button>
+                                    <button class="btn btn-sm btn-outline" onclick="document.getElementById('login-email').value='joao@kotaja.com'">Coord</button>
+                                    <button class="btn btn-sm btn-outline" onclick="document.getElementById('login-email').value='marcos@loja.com'">Lojista</button>
+                                    <button class="btn btn-sm btn-outline" onclick="document.getElementById('login-email').value='pedro@kotaja.com'">Pesq.</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderAdminPanel: (container) => {
+                const usersHtml = DB.users.map(u => `
+                    <tr>
+                        <td>${u.name}</td>
+                        <td>${u.email}</td>
+                        <td><span class="tag">${u.role}</span></td>
+                        <td>${u.regionId || '-'}</td>
+                        <td><span class="tag success">${u.status}</span></td>
+                        <td><button class="btn btn-sm btn-ghost">Editar</button></td>
+                    </tr>
+                `).join('');
+
+                container.innerHTML = `
+                    <div class="flex-between">
+                        <h2>Painel do Administrador</h2>
+                        <button class="btn btn-primary" onclick="app.showToast('Funcionalidade de criar usuário simulada')">+ Novo Usuário</button>
+                    </div>
+                    <div class="grid-3 mt-2">
+                        <div class="card text-center"><h1>${DB.users.length}</h1><small>Usuários Totais</small></div>
+                        <div class="card text-center"><h1>${DB.stores.length}</h1><small>Lojas Cadastradas</small></div>
+                        <div class="card text-center"><h1>Ativo</h1><small>Status do Sistema</small></div>
+                    </div>
+                    <div class="card mt-2">
+                        <h3>Gestão de Usuários</h3>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Nome</th><th>Email</th><th>Role</th><th>Região</th><th>Status</th><th>Ações</th></tr></thead>
+                                <tbody>${usersHtml}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-center">
+                        <button class="btn btn-outline" onclick="router.navigate('panel-batch')">Acessar Painel de Batch/Auditoria</button>
+                    </div>
+                `;
+            },
+
+            renderManagerPanel: (container) => {
+                container.innerHTML = `
+                    <h2>Painel do Gerente (Catálogo Global)</h2>
+                    <div class="tabs">
+                        <button class="tab-btn active">Marcas & Modelos</button>
+                        <button class="tab-btn">Variantes</button>
+                        <button class="tab-btn">Configurações Globais</button>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="flex-between"><h3>Marcas</h3> <button class="btn btn-sm btn-primary">+</button></div>
+                            <ul>${DB.brands.map(b => `<li style="padding:10px; border-bottom:1px solid var(--border-color)">${b.name}</li>`).join('')}</ul>
+                        </div>
+                        <div class="card">
+                            <div class="flex-between"><h3>Variantes Recentes</h3> <button class="btn btn-sm btn-primary">+</button></div>
+                            <ul>${DB.variants.map(v => `<li style="padding:10px; border-bottom:1px solid var(--border-color)">${v.label}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-outline" onclick="router.navigate('panel-batch')">Executar Batch Mensal</button>
+                    </div>
+                `;
+            },
+
+            renderCoordPanel: (container) => {
+                const pendingStores = DB.stores.filter(s => s.regionId === state.currentUser.regionId && s.status === 'PENDING');
+                const regionStores = DB.stores.filter(s => s.regionId === state.currentUser.regionId && s.status === 'APPROVED');
+                const researchers = DB.users.filter(u => u.role === 'RESEARCHER' && u.regionId === state.currentUser.regionId);
+
+                container.innerHTML = `
+                    <div class="flex-between">
+                        <h2>Painel do Coordenador</h2>
+                        <span class="badge active">Região: ${state.currentUser.regionId}</span>
+                    </div>
+
+                    <div class="card mt-2">
+                        <h3>🏢 Aprovação de Lojas (${pendingStores.length} pendentes)</h3>
+                        ${pendingStores.length === 0 ? '<p>Nenhuma pendência.</p>' : 
+                        `<table class="mt-2">
+                            <thead><tr><th>Loja</th><th>Cidade</th><th>Docs</th><th>Ação</th></tr></thead>
+                            <tbody>
+                                ${pendingStores.map(s => `
+                                    <tr>
+                                        <td>${s.name}</td>
+                                        <td>${s.city}</td>
+                                        <td><a href="#" style="color:var(--primary-color)">Ver docs</a></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary" onclick="app.coordApproveStore(${s.id})">Aprovar</button>
+                                            <button class="btn btn-sm btn-danger" onclick="app.showToast('Rejeitado (simulado)')">Rejeitar</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>`}
+                    </div>
+
+                    <div class="card mt-2">
+                        <h3>📅 Planejamento Semanal (Assignments)</h3>
+                        <div class="form-group grid-2">
+                            <div>
+                                <label>Atribuir Pesquisador</label>
+                                <select id="assign-researcher">
+                                    ${researchers.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div>
+                                <label>Para a Loja</label>
+                                <select id="assign-store">
+                                    ${regionStores.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="app.coordCreateAssignment()">Criar Tarefa de Coleta</button>
+                        
+                        <div class="mt-2">
+                            <h4>Tarefas Ativas</h4>
+                            <ul>
+                                ${DB.assignments.filter(a => regionStores.some(s => s.id == a.storeId)).map(a => {
+                                    const r = DB.users.find(u => u.id == a.researcherId);
+                                    const s = DB.stores.find(st => st.id == a.storeId);
+                                    return `<li style="padding:5px; border-bottom:1px solid #333">Pesquisador <b>${r.name}</b> -> Loja <b>${s.name}</b> <span class="tag pending">${a.status}</span></li>`
+                                }).join('') || '<small>Nenhuma tarefa criada.</small>'}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderShopPanel: (container) => {
+                const myStore = DB.stores.find(s => s.ownerId === state.currentUser.id);
+
+                container.innerHTML = `
+                    <h2>Painel do Lojista</h2>
+                    ${myStore ? `
+                        <div class="card">
+                            <h3>Minha Loja: ${myStore.name}</h3>
+                            <p>Status: <span class="tag ${myStore.status === 'APPROVED' ? 'approved' : 'pending'}">${myStore.status}</span></p>
+                            <p>${myStore.city}/${myStore.uf}</p>
+                            ${myStore.status === 'APPROVED' ? '<p>✅ Sua loja está habilitada para receber pesquisadores.</p>' : '<p>⏳ Aguardando análise do Coordenador.</p>'}
+                        </div>
+                    ` : `
+                        <div class="card">
+                            <h3>Cadastrar Loja</h3>
+                            <div class="form-group">
+                                <label>Nome Fantasia</label>
+                                <input type="text" id="shop-name" placeholder="Ex: Multimarcas Zona Sul">
+                            </div>
+                            <div class="form-group">
+                                <label>Cidade/UF</label>
+                                <input type="text" id="shop-city" value="São Paulo">
+                            </div>
+                             <div class="form-group">
+                                <label>Região</label>
+                                <select id="shop-region">
+                                    ${DB.regions.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Documentação (CNPJ/Contrato Social)</label>
+                                <input type="file" disabled style="opacity:0.5">
+                                <small>Simulação: arquivo "anexado" automaticamente.</small>
+                            </div>
+                            <button class="btn btn-primary" onclick="app.shopSubmitStore()">Enviar para Aprovação</button>
+                        </div>
+                    `}
+                `;
+            },
+
+            renderResearcherPanel: (container) => {
+                // Find assignments for this researcher
+                const myTasks = DB.assignments.filter(a => a.researcherId === state.currentUser.id && a.status !== 'COMPLETED');
+                
+                container.innerHTML = `
+                    <h2>Painel do Pesquisador</h2>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>📋 Minhas Tarefas (Semana Atual)</h3>
+                            ${myTasks.length === 0 ? '<p>Nenhuma loja atribuída.</p>' : 
+                                `<ul>
+                                    ${myTasks.map(t => {
+                                        const store = DB.stores.find(s => s.id == t.storeId);
+                                        return `
+                                        <li class="card" style="padding:10px; margin-bottom:10px; border:1px solid var(--primary-color)">
+                                            <strong>${store.name}</strong><br>
+                                            <small>${store.city}</small><br>
+                                            <button class="btn btn-sm btn-primary mt-2" onclick="views.renderCollectionForm(${t.id}, '${store.name}')">Iniciar Coleta</button>
+                                        </li>`;
+                                    }).join('')}
+                                </ul>`
+                            }
+                        </div>
+
+                        <div class="card">
+                            <h3>➕ Sugerir Nova Loja</h3>
+                            <p>Encontrou uma loja nova na rota?</p>
+                            <button class="btn btn-outline" onclick="app.showToast('Formulário de sugestão (similar ao lojista) abriria aqui.')">Sugerir Loja</button>
+                        </div>
+                    </div>
+                    <div id="collection-area"></div>
+                `;
+            },
+
+            // Sub-view render helper
+            renderCollectionForm: (assignmentId, storeName) => {
+                const area = document.getElementById('collection-area');
+                area.innerHTML = `
+                    <div class="card mt-2" style="border-top: 4px solid var(--primary-color)">
+                        <h3>Coletando em: ${storeName}</h3>
+                        <div class="form-group">
+                            <label>Veículo Encontrado</label>
+                            <select id="collect-variant">
+                                ${DB.variants.map(v => `<option value="${v.id}">${v.label}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Preço Anunciado (R$)</label>
+                                <input type="number" id="collect-price" placeholder="Ex: 85000">
+                            </div>
+                            <div class="form-group">
+                                <label>Cor / Opcionais</label>
+                                <input type="text" id="collect-details" placeholder="Ex: Prata, couro">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="app.researcherSaveCollection(${assignmentId})">Salvar Observação</button>
+                        <hr style="margin: 15px 0; border-color: var(--border-color)">
+                        <button class="btn btn-sm btn-ghost" onclick="document.getElementById('collection-area').innerHTML=''">Cancelar</button>
+                    </div>
+                `;
+                // Scroll to form
+                area.scrollIntoView({behavior: "smooth"});
+            },
+
+            renderBatchPanel: (container) => {
+                container.innerHTML = `
+                    <h2>⚙️ Processamento Batch & Médias Mensais</h2>
+                    <p>Este processo consolida todas as observações dos pesquisadores.</p>
+                    
+                    <div class="card">
+                        <h3>Execução Manual</h3>
+                        <p>Última execução: ${DB.batchRuns.length > 0 ? new Date(DB.batchRuns[DB.batchRuns.length-1].date).toLocaleString() : 'Nunca'}</p>
+                        <button class="btn btn-primary" onclick="app.runBatch()">▶ Executar Cálculo de Médias</button>
+                    </div>
+
+                    <div class="card mt-2">
+                        <h3>Histórico de Execuções</h3>
+                        <table>
+                            <thead><tr><th>ID</th><th>Data</th><th>Status</th><th>Resumo</th></tr></thead>
+                            <tbody id="batch-log-body">
+                                ${DB.batchRuns.map(r => `<tr><td>${r.id}</td><td>${new Date(r.date).toLocaleTimeString()}</td><td><span class="tag ${r.status === 'SUCCESS' ? 'success' : 'running'}">${r.status}</span></td><td>${r.summary}</td></tr>`).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card mt-2">
+                        <h3>Médias Calculadas (Preview DB)</h3>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>Região</th><th>Variante</th><th>Média Calculada</th></tr></thead>
+                                <tbody>
+                                    ${DB.monthlyAverages.map(m => {
+                                        const v = DB.variants.find(x => x.id === m.variantId);
+                                        const r = DB.regions.find(x => x.id === m.regionId);
+                                        return `<tr><td>${r.name}</td><td>${v.label}</td><td>R$ ${m.avgPrice.toFixed(2)}</td></tr>`;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderAbout: (container) => {
+                container.innerHTML = `
+                    <div class="card">
+                        <h2>Sobre o KotaJá</h2>
+                        <p>Plataforma de inteligência de mercado automotivo.</p>
+                        <ul>
+                            <li><strong>Stack Protótipo:</strong> HTML5, CSS3, Vanilla JS (Sem frameworks)</li>
+                            <li><strong>Arquitetura:</strong> SPA com State Management em memória</li>
+                            <li><strong>Design System:</strong> Dark Mode Customizado</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        };
+
+        /* --- CONTROLLER / LOGIC --- */
+        const app = {
+            login: () => {
+                const email = document.getElementById('login-email').value;
+                const user = DB.users.find(u => u.email === email);
+                
+                if (user) {
+                    state.currentUser = user;
+                    app.showToast(`Bem-vindo, ${user.name} (${user.role})`);
+                    
+                    // Route based on role
+                    if (user.role === 'ADMIN') router.navigate('panel-admin');
+                    else if (user.role === 'MANAGER') router.navigate('panel-manager');
+                    else if (user.role === 'COORDINATOR') router.navigate('panel-coord');
+                    else if (user.role === 'SHOPKEEPER') router.navigate('panel-shop');
+                    else if (user.role === 'RESEARCHER') router.navigate('panel-researcher');
+                    else router.navigate('home');
+                } else {
+                    alert('Usuário não encontrado. Use os botões de teste.');
+                }
+            },
+
+            logout: () => {
+                state.currentUser = null;
+                router.navigate('login');
+                app.showToast("Logout realizado.");
+            },
+
+            updateNav: () => {
+                const nav = document.getElementById('main-nav');
+                const userDisplay = document.getElementById('user-display');
+                const userName = document.getElementById('user-name');
+                const loginLink = document.getElementById('nav-login');
+
+                if (state.currentUser) {
+                    loginLink.classList.add('hidden');
+                    userDisplay.classList.remove('hidden');
+                    userName.textContent = state.currentUser.name;
+                    
+                    // Add Panel Link dynamically
+                    let panelLink = document.getElementById('nav-panel');
+                    if(!panelLink) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<a id="nav-panel" onclick="router.navigate('panel-${app.getRoleSlug()}')">Meu Painel</a>`;
+                        nav.appendChild(li);
+                    }
+                } else {
+                    loginLink.classList.remove('hidden');
+                    userDisplay.classList.add('hidden');
+                    const panelLink = document.getElementById('nav-panel');
+                    if(panelLink) panelLink.parentElement.remove();
+                }
+            },
+
+            getRoleSlug: () => {
+                if(!state.currentUser) return '';
+                const map = { 'ADMIN': 'admin', 'MANAGER': 'manager', 'COORDINATOR': 'coord', 'SHOPKEEPER': 'shop', 'RESEARCHER': 'researcher' };
+                return map[state.currentUser.role];
+            },
+
+            performPublicSearch: () => {
+                const regionId = document.getElementById('search-region').value;
+                const variantId = parseInt(document.getElementById('search-variant').value);
+                const resultCard = document.getElementById('search-result-card');
+                const priceDisplay = document.getElementById('search-price-display');
+                const detailDisplay = document.getElementById('search-detail-display');
+                const logsBody = document.getElementById('search-logs-body');
+
+                // Simulate calculation (find stored average or generate random realistic number)
+                // If there's a batch average, use it. Else random.
+                const storedAvg = DB.monthlyAverages.find(m => m.regionId === regionId && m.variantId === variantId);
+                let price = storedAvg ? storedAvg.avgPrice : (Math.random() * (90000 - 40000) + 40000);
+                
+                const formattedPrice = price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                
+                // Show result
+                resultCard.style.display = 'block';
+                priceDisplay.textContent = `R$ ${formattedPrice}`;
+                
+                const variant = DB.variants.find(v => v.id === variantId);
+                detailDisplay.textContent = `${variant.label} - Região: ${regionId}`;
+
+                // Log Audit
+                const log = {
+                    date: new Date().toISOString(),
+                    filters: `${regionId} - ${variant.label}`,
+                    result: formattedPrice
+                };
+                DB.publicLogs.unshift(log); // Add to start
+                
+                // Update table
+                logsBody.innerHTML = DB.publicLogs.map(l => `
+                    <tr>
+                        <td>${new Date(l.date).toLocaleString()}</td>
+                        <td>${l.filters}</td>
+                        <td>R$ ${l.result}</td>
+                    </tr>
+                `).join('');
+            },
+
+            shopSubmitStore: () => {
+                const name = document.getElementById('shop-name').value;
+                const city = document.getElementById('shop-city').value;
+                const region = document.getElementById('shop-region').value;
+
+                if(!name) return alert("Preencha o nome");
+
+                const newStore = {
+                    id: Math.floor(Math.random() * 1000),
+                    ownerId: state.currentUser.id,
+                    name: name,
+                    city: city,
+                    regionId: region,
+                    uf: "UF",
+                    status: "PENDING"
+                };
+                DB.stores.push(newStore);
+                app.showToast("Loja enviada para análise!");
+                router.navigate('panel-shop'); // Refresh
+            },
+
+            coordApproveStore: (id) => {
+                const store = DB.stores.find(s => s.id === id);
+                if(store) {
+                    store.status = "APPROVED";
+                    app.showToast(`Loja ${store.name} APROVADA!`);
+                    router.navigate('panel-coord');
+                }
+            },
+
+            coordCreateAssignment: () => {
+                const resId = document.getElementById('assign-researcher').value;
+                const storeId = document.getElementById('assign-store').value;
+                
+                DB.assignments.push({
+                    id: Date.now(),
+                    week: "2026-W07",
+                    researcherId: parseInt(resId),
+                    storeId: parseInt(storeId),
+                    status: "PENDING"
+                });
+                app.showToast("Tarefa atribuída com sucesso");
+                router.navigate('panel-coord');
+            },
+
+            researcherSaveCollection: (assignmentId) => {
+                const price = document.getElementById('collect-price').value;
+                const variantId = document.getElementById('collect-variant').value;
+
+                if(!price) return alert("Informe o preço");
+
+                // Save observation
+                DB.observations.push({
+                    id: Date.now(),
+                    assignmentId: assignmentId,
+                    variantId: parseInt(variantId),
+                    price: parseFloat(price),
+                    date: new Date().toISOString()
+                });
+
+                // Update assignment status
+                const task = DB.assignments.find(a => a.id === assignmentId);
+                task.status = "COMPLETED"; // In real app, might need multiple collections to complete
+
+                app.showToast("Coleta salva e sincronizada!");
+                document.getElementById('collection-area').innerHTML = '';
+                router.navigate('panel-researcher');
+            },
+
+            runBatch: () => {
+                app.showToast("Iniciando Job Batch...");
+                
+                // 1. Filter observations per region/variant
+                // 2. Calculate averages
+                // Simple logic for prototype:
+                
+                // Clear old averages
+                DB.monthlyAverages = [];
+
+                // Create a map to sum prices
+                const sumMap = {}; // key: "regionId-variantId", value: { sum, count }
+
+                DB.observations.forEach(obs => {
+                    // Find region via assignment -> store
+                    const task = DB.assignments.find(a => a.id === obs.assignmentId);
+                    const store = DB.stores.find(s => s.id === task.storeId);
+                    const key = `${store.regionId}-${obs.variantId}`;
+
+                    if(!sumMap[key]) sumMap[key] = { sum: 0, count: 0 };
+                    sumMap[key].sum += obs.price;
+                    sumMap[key].count++;
+                });
+
+                // Compute averages
+                let generatedCount = 0;
+                for (const key in sumMap) {
+                    const [regionId, variantId] = key.split('-');
+                    const avg = sumMap[key].sum / sumMap[key].count;
+                    DB.monthlyAverages.push({
+                        regionId: regionId,
+                        variantId: parseInt(variantId),
+                        avgPrice: avg,
+                        month: "2026-02"
+                    });
+                    generatedCount++;
+                }
+
+                // Log run
+                DB.batchRuns.push({
+                    id: `BATCH-${Date.now()}`,
+                    date: new Date().toISOString(),
+                    status: 'SUCCESS',
+                    summary: `Geradas ${generatedCount} médias.`
+                });
+
+                router.navigate('panel-batch');
+            },
+
+            showToast: (msg) => {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerText = msg;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+        };
+
+        // Initialize
+        window.onload = () => {
+            // Pre-fill some observations for batch demo
+            // Assignment: Pedro (4) -> Store 100
+            const demoAssign = { id: 999, week: "2026-W06", researcherId: 4, storeId: 100, status: "COMPLETED" };
+            DB.assignments.push(demoAssign);
+            DB.observations.push(
+                { id: 1, assignmentId: 999, variantId: 1, price: 89000, date: new Date().toISOString() },
+                { id: 2, assignmentId: 999, variantId: 1, price: 91000, date: new Date().toISOString() }, // Avg 90k
+                { id: 3, assignmentId: 999, variantId: 2, price: 75000, date: new Date().toISOString() }
+            );
+
+            router.navigate('home');
+        };
+
+    </script>
+</body>
+</html>
