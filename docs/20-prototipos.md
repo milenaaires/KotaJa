@@ -66,13 +66,14 @@ O sistema conta com um motor de **Batch Processing** simulado:
 
 Para testar o sistema agora mesmo, faça dowload:
 
-<a href="downloads/Prototipo_KotaJa.html"
-   download="Prototipo_KotaJa.html"
+<a href="https://raw.githubusercontent.com/milenaaires/KotaJa/main/docs/downloads/Prototipo_KotaJa.html"
    class="md-button md-button--primary">
-  ⬇️ Baixar HTML
+  ⬇️ Baixar HTML (raw)
 </a>
+
 
 ---
 
 *Este projeto é um protótipo funcional para validação de requisitos e interface.*
+
 
