@@ -66,15 +66,17 @@ O sistema conta com um motor de **Batch Processing** simulado:
 
 Para testar o sistema agora mesmo, faça dowload:
 
-
 <div align="center">
   <br>
-  <a href="https://github.com/milenaaires/KotaJa/blob/main/Prototipo_KotaJa.html" download>
+  <a href="https://github.com/milenaaires/KotaJa/blob/main/Prototipo_KotaJa.html" target="_blank">
     <img src="https://img.shields.io/badge/DOWNLOAD-PROTÓTIPO-orange?style=for-the-badge&logo=html5" alt="Download KotaJá">
   </a>
+  <br>
+  <ins>Dica: Se o download não iniciar, clique com o botão direito no botão acima e escolha "Salvar link como..."</ins>
   <br><br>
 </div>
 
 ---
 
 *Este projeto é um protótipo funcional para validação de requisitos e interface.*
+
