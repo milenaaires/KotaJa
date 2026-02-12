@@ -62,15 +62,11 @@ O sistema conta com um motor de **Batch Processing** simulado:
 
 ---
 
-## 🚀 Execução Rápida
+## Execução Rápida
 
-Para testar o sistema agora mesmo, faça dowload:
+Para testar o sistema agora mesmo:
 
-<a href="https://raw.githubusercontent.com/milenaaires/KotaJa/main/docs/downloads/Prototipo_KotaJa.html"
-   class="md-button md-button--primary">
-  ⬇️ Baixar HTML (raw)
-</a>
-
+<a href="https://milenaaires.github.io/KotaJa/downloads/Prototipo_KotaJa.html">Aperte aqui</a>
 
 ---
 
