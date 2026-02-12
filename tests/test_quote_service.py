@@ -1,72 +1,94 @@
-from __future__ import annotations
-
 from datetime import date
 from decimal import Decimal
-from uuid import UUID
+from uuid import uuid4
+from unittest.mock import Mock
 
-import pytest
-
-from src.domain.quote_models import QuoteFilters
 from src.services.quote_service import QuoteService
+from src.domain.quote_models import QuoteFilters
 
 
-class FakeQuoteRepo:
-    def __init__(self, row):
-        self.row = row
+def test_get_quote_returns_none_and_logs_when_no_row():
+    # Arrange
+    repo = Mock()
+    log_repo = Mock()
+    repo.fetch_monthly_average.return_value = None
 
-    def fetch_monthly_average(self, filters):
-        return self.row
+    svc = QuoteService(repo=repo, log_repo=log_repo)
 
-
-def test_ct01_consulta_com_resultado_retorna_dict_normalizado():
-    # Simula retorno do banco (como psycopg dict_row)
-    row = {
-        "avg_price": Decimal("25000.00"),
-        "sample_size": 12,
-        "region_id": UUID("11111111-1111-1111-1111-111111111111"),
-        "vehicle_variant_id": UUID("44444444-4444-4444-4444-444444444444"),
-        "month_ref": date(2026, 2, 1),
-    }
-
-    svc = QuoteService(FakeQuoteRepo(row))
     filters = QuoteFilters(
         month_ref=date(2026, 2, 1),
-        region_id="11111111-1111-1111-1111-111111111111",
-        vehicle_variant_id="44444444-4444-4444-4444-444444444444",
-    )
-
-    res = svc.get_quote(filters)
-
-    assert res is not None
-    assert isinstance(res, dict)
-
-    # Normalizações esperadas
-    assert res["avg_price"] == 25000.0
-    assert res["sample_size"] == 12
-    assert res["region_id"] == "11111111-1111-1111-1111-111111111111"
-    assert res["vehicle_variant_id"] == "44444444-4444-4444-4444-444444444444"
-
-
-def test_ct02_consulta_sem_resultado_retorna_none():
-    svc = QuoteService(FakeQuoteRepo(None))
-    filters = QuoteFilters(
-        month_ref=date(2026, 2, 1),
-        region_id="11111111-1111-1111-1111-111111111111",
+        region_id="df",
+        brand_id="vw",
+        model_id="fusca",
         vehicle_variant_id=None,
     )
 
-    res = svc.get_quote(filters)
-    assert res is None
+    ua = "pytest-agent"
+    ip = "127.0.0.1"
+    brand_uuid = uuid4()
+    model_uuid = uuid4()
+
+    # Act
+    result = svc.get_quote(
+        filters=filters,
+        user_agent=ua,
+        ip=ip,
+        brand_id=brand_uuid,
+        model_id=model_uuid,
+    )
+
+    # Assert
+    assert result is None
+    repo.fetch_monthly_average.assert_called_once_with(filters)
+    log_repo.insert_public_query_log.assert_called_once_with(
+        filters,
+        user_agent=ua,
+        ip=ip,
+        brand_id=brand_uuid,
+        model_id=model_uuid,
+    )
 
 
-def test_ct03_erro_no_repo_sobe_excecao():
-    class BoomRepo:
-        def fetch_monthly_average(self, filters):
-            raise Exception("db down")
+def test_get_quote_converts_decimal_and_uuid_and_logs_on_success():
+    # Arrange
+    repo = Mock()
+    log_repo = Mock()
 
-    svc = QuoteService(BoomRepo())
-    filters = QuoteFilters(month_ref=date(2026, 2, 1), region_id="r1", vehicle_variant_id=None)
+    region_uuid = uuid4()
+    variant_uuid = uuid4()
 
-    # Na estrutura atual, o serviço NÃO trata exceção.
-    with pytest.raises(Exception, match="db down"):
-        svc.get_quote(filters)
+    repo.fetch_monthly_average.return_value = {
+        "avg_price": Decimal("12345.67"),
+        "region_id": region_uuid,
+        "vehicle_variant_id": variant_uuid,
+        "sample_size": 10,
+    }
+
+    svc = QuoteService(repo=repo, log_repo=log_repo)
+
+    filters = QuoteFilters(
+        month_ref=date(2026, 2, 1),
+        region_id="df",
+        brand_id=None,
+        model_id=None,
+        vehicle_variant_id=None,
+    )
+
+    # Act
+    result = svc.get_quote(filters=filters)
+
+    # Assert
+    assert result is not None
+    assert result["avg_price"] == 12345.67          # Decimal -> float
+    assert result["region_id"] == str(region_uuid)  # UUID -> str
+    assert result["vehicle_variant_id"] == str(variant_uuid)  # UUID -> str
+    assert result["sample_size"] == 10
+
+    repo.fetch_monthly_average.assert_called_once_with(filters)
+    log_repo.insert_public_query_log.assert_called_once_with(
+        filters,
+        user_agent=None,
+        ip=None,
+        brand_id=None,
+        model_id=None,
+    )

@@ -1,25 +1,16 @@
 from __future__ import annotations
 
-import sys
+from datetime import date
 from pathlib import Path
 from uuid import UUID
-from datetime import date
 
 import streamlit as st
 
-# =========================
-# PATH (para importar src/)
-# =========================
-ROOT = Path(__file__).resolve().parents[1]  # .../KotaJa
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
 from src.domain.quote_models import QuoteFilters
-from src.services.quote_service import QuoteService
 from src.repositories.catalog_repository import CatalogRepository
 from src.repositories.log_repository import LogRepository
 from src.repositories.public_query_repository import PublicQueryRepository
-
+from src.services.quote_service import QuoteService
 
 # =========================
 # CONFIG + THEME
@@ -36,8 +27,11 @@ BG = "#0b0f14"
 TEXT = "#e5e7eb"
 MUTED = "#94a3b8"
 
+APP_DIR = Path(__file__).resolve().parent
+ROOT_DIR = APP_DIR.parent
+
 DOCS_URL = "https://milenaaires.github.io/KotaJa/"
-LOGO_PATH = str((ROOT / "docs" / "assets" / "logo" / "fusca.png").resolve())
+LOGO_PATH = str((ROOT_DIR / "docs" / "assets" / "logo" / "fusca.png").resolve())
 
 st.markdown(
     f"""
