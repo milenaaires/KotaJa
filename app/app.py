@@ -1,16 +1,23 @@
 from __future__ import annotations
 
-from datetime import date
+import sys
 from pathlib import Path
+
+# Garante que a raiz do repo (onde está /src) entra no sys.path
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from datetime import date
 from uuid import UUID
 
 import streamlit as st
 
-from src.domain.quote_models import QuoteFilters
-from src.repositories.catalog_repository import CatalogRepository
-from src.repositories.log_repository import LogRepository
-from src.repositories.public_query_repository import PublicQueryRepository
-from src.services.quote_service import QuoteService
+from src.domain.quote_models import QuoteFilters  # noqa: E402
+from src.repositories.catalog_repository import CatalogRepository  # noqa: E402
+from src.repositories.log_repository import LogRepository  # noqa: E402
+from src.repositories.public_query_repository import PublicQueryRepository  # noqa: E402
+from src.services.quote_service import QuoteService  # noqa: E402
 
 # =========================
 # CONFIG + THEME
