@@ -42,8 +42,8 @@ nav:
       - Papéis e Responsabilidades: 02-papeis-responsabilidades.md
       - Fluxos Funcionais: 03-fluxos-funcionais.md
       - Requisitos: 04-requisitos.md
-      - Casos de Uso: 05-casos-de-uso.md
-      - User Stories: 06-user-stories.md
+      - User Stories: 05-1userstories.md
+      - User Cases: 06-1usercases.md
 
   - Modelo de Dados:
       - Modelagem (Entidades): 07-modelagem-entidades.md

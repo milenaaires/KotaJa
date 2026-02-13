@@ -114,9 +114,10 @@ para comparar valores de mercado.
 
 ---
 
-# 🤖 Sistema
+# Sistema
 
 ## US-SYS-01 — Calcular Médias Mensais
 Como **Sistema**,  
 quero calcular médias mensais automaticamente,  
 para disponibilizar dados consolidados.
+
