@@ -2,10 +2,6 @@
   <img src="/assets/logo/logopreta.png" width="300">
 </p>
 
-Desafio Instituto Minerva
-
-Autor(a): Milena Beatriz Aires de Santana Dias
-
 Sistema de captura, organização e consulta pública de preços de veículos coletados em lojas físicas, com gerenciamento operacional por regiões e planejamento semanal de pesquisas.
 
 ---
