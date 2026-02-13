@@ -8,7 +8,7 @@ As histórias seguem o padrão:
 
 ---
 
-## 🎭 Personas do Sistema
+## 1. Personas do Sistema
 
 - Administrador
 - Gerente
@@ -19,7 +19,7 @@ As histórias seguem o padrão:
 
 ---
 
-# 👤 Administrador
+## 2.  Administrador
 
 ## US-ADM-01 — Cadastro de Usuários
 Como **Administrador**,  
@@ -33,7 +33,7 @@ para controlar o acesso conforme os perfis.
 
 ---
 
-# 🧭 Gerente
+## 3. Gerente
 
 ## US-GER-01 — Gerenciar Catálogo de Veículos
 Como **Gerente**,  
@@ -47,7 +47,7 @@ para padronizar os dados utilizados nas pesquisas.
 
 ---
 
-# 🌎 Coordenador Regional
+## 4. Coordenador Regional
 
 ## US-COORD-01 — Aprovar Cadastro de Lojas
 Como **Coordenador**,  
@@ -68,7 +68,7 @@ para organizar a coleta de dados.
 
 ---
 
-# 🔎 Pesquisador
+## 5. Pesquisador
 
 ## US-PESQ-01 — Registrar Observação de Preço
 Como **Pesquisador**,  
@@ -90,7 +90,7 @@ para ampliar a cobertura de coleta.
 
 ---
 
-# 🏪 Lojista
+## 6. Lojista
 
 ## US-LOJ-01 — Solicitar Cadastro da Loja
 Como **Lojista**,  
@@ -99,7 +99,7 @@ para participar da base de pesquisa.
 
 ---
 
-# 👥 Usuário Público
+## 7. Usuário Público
 
 ## US-PUB-01 — Consultar Preço Médio
 Como **Usuário Público**,  
@@ -114,7 +114,7 @@ para comparar valores de mercado.
 
 ---
 
-# Sistema
+# 8. Sistema
 
 ## US-SYS-01 — Calcular Médias Mensais
 Como **Sistema**,  

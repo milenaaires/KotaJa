@@ -6,18 +6,18 @@ Os fluxos são apresentados de forma conceitual, sem detalhamento técnico de im
 
 ---
 
-## Objetivo
+## 1. Objetivo
 
 Documentar o funcionamento do sistema sob a perspectiva do negócio, garantindo clareza sobre responsabilidades, dependências e sequenciamento das atividades.
 
 ---
 
-## Fluxo 1 — Cadastro e Aprovação de Lojas
+## 2. Fluxo 1 — Cadastro e Aprovação de Lojas
 
-### Descrição
+### 2.1 Descrição
 O cadastro de lojas pode ser iniciado por lojistas ou pesquisadores. Todas as lojas precisam ser avaliadas e aprovadas por um coordenador regional antes de entrarem em operação.
 
-### Passos
+### 2.2 Passos
 1. Lojista ou pesquisador submete o cadastro de uma loja
 2. Documentos e informações da loja são enviados
 3. A loja entra com status **PENDENTE**
@@ -41,78 +41,78 @@ flowchart TD
 </pre>
 
 
-### Regras
+### 2.3 Regras
 - Apenas lojas aprovadas podem receber coletas de preços
 - Toda decisão deve registrar responsável e data
 
 ---
 
-## Fluxo 2 — Planejamento Semanal de Pesquisa
+## 3. Fluxo 2 — Planejamento Semanal de Pesquisa
 
-### Descrição
+### 3.1 Descrição
 O coordenador regional define semanalmente quais lojas devem ser pesquisadas por cada pesquisador em sua região.
 
-### Passos
+### 3.2 Passos
 1. Coordenador seleciona o período da semana
 2. Coordenador escolhe as lojas aprovadas da região
 3. Coordenador atribui as lojas a pesquisadores
 4. O planejamento semanal é registrado no sistema
 5. Pesquisadores visualizam suas atribuições
 
-### Regras
+### 3.3 Regras
 - Uma loja só pode ser atribuída se estiver aprovada
 - Planejamentos são organizados por região e período
 
 ---
 
-## Fluxo 3 — Coleta de Preços
+## 4. Fluxo 3 — Coleta de Preços
 
-### Descrição
+### 4.1 Descrição
 Pesquisadores registram os preços observados nas lojas atribuídas durante o planejamento semanal.
 
-### Passos
+### 4.2 Passos
 1. Pesquisador acessa sua lista de lojas da semana
 2. Pesquisador seleciona o veículo pesquisado
 3. Pesquisador informa o valor observado
 4. O sistema registra a observação com data, loja e pesquisador
 
-### Regras
+### 4.3 Regras
 - Cada observação deve estar associada a uma loja e um veículo
 - Observações devem registrar autor e data
 - O sistema pode aplicar validações para evitar duplicidades simples
 
 ---
 
-## Fluxo 4 — Processamento Mensal (Batch)
+## 5. Fluxo 4 — Processamento Mensal (Batch)
 
-### Descrição
+### 5.1 Descrição
 O sistema executa periodicamente um processamento batch para consolidar os dados coletados.
 
-### Passos
+### 5.2 Passos
 1. O sistema identifica observações do período mensal
 2. Os valores são agregados por veículo
 3. O sistema calcula a média mensal
 4. Os resultados consolidados são armazenados
 
-### Regras
+### 5.3 Regras
 - O processamento deve ser idempotente
 - Resultados devem ser versionados por período
 - O batch não altera dados originais de coleta
 
 ---
 
-## Fluxo 5 — Consulta Pública de Cotação
+## 6. Fluxo 5 — Consulta Pública de Cotação
 
-### Descrição
+### 6.1 Descrição
 Usuários públicos podem consultar valores médios de veículos sem necessidade de autenticação.
 
-### Passos
+### 6.2 Passos
 1. Usuário seleciona filtros (ex.: marca, modelo, variante)
 2. O sistema consulta os dados consolidados
 3. O valor médio mensal é exibido ao usuário
 4. A consulta realizada é registrada pelo sistema
 
-### Regras
+### 6.3 Regras
 - A consulta não exige login
 - Todas as consultas devem ser registradas
 - Caso não existam dados, o sistema deve informar claramente
@@ -133,7 +133,7 @@ flowchart TD
 
 ---
 
-## Relação entre os Fluxos
+## 7. Relação entre os Fluxos
 
 Os fluxos descritos estão interligados:
 

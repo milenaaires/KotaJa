@@ -1,11 +1,11 @@
 # Modelagem de Dados — Entidades e Regras
 
-## Objetivo
+## 1. Objetivo
 Definir as entidades do KotaJá, seus relacionamentos e regras mínimas de integridade, servindo de base para o ERD e o dicionário de dados.
 
 ---
 
-## Decisões 
+## 2. Decisões 
 - **A (Agregação mensal)**: média mensal por **variante + região**
 - **B (Loja/região)**: loja pode mudar de região ao longo do tempo (**histórico**)
 - **C (Observações)**: permitir múltiplas observações no mesmo dia (**com horário e/ou justificativa**)
