@@ -37,34 +37,37 @@ nav:
   - Início: index.md
 
   - Especificação Funcional:
+      - Planning: 00-planning.md
       - Visão e Escopo: 01-visao-escopo.md
       - Papéis e Responsabilidades: 02-papeis-responsabilidades.md
       - Fluxos Funcionais: 03-fluxos-funcionais.md
       - Requisitos: 04-requisitos.md
+      - User Cases: 05-user-cases.md
+      - User Stories: 06-user-stories.md
 
   - Modelo de Dados:
-      - Modelagem (Entidades): 05-modelagem-entidades.md
-      - ERD: 06-erd.md
-      - Regras e Índices: 07-regras-integridade-indices.md
-      - Dicionário de Dados: 08-dicionario-dados.md
-      - Modelo Físico (DDL): 09-modelo-fisico-ddl.md
-      - Notas de Modelagem: 10-notas-modelagem.md
+      - Modelagem (Entidades): 07-modelagem-entidades.md
+      - ERD: 08-erd.md
+      - Regras e Índices: 09-regras-integridade-indices.md
+      - Dicionário de Dados: 10-dicionario-dados.md
+      - Modelo Físico (DDL): 11-modelo-fisico-ddl.md
+      - Notas de Modelagem: 12-notas-modelagem.md
 
   - Arquitetura:
-      - Arquitetura Alto Nível: 11-arquitetura-alto-nivel.md
-      - Arquitetura de Componentes: 12-componentes.md
-      - Estrutura de Pastas: 13-estrutura-pastas.md
+      - Arquitetura Alto Nível: 13-arquitetura-alto-nivel.md
+      - Arquitetura de Componentes: 14-componentes.md
+      - Estrutura de Pastas: 15-estrutura-pastas.md
 
   - Technical Design:
-      - Fluxo Técnico (Consulta): 14-fluxo-tecnico-consulta.md
-      - Contratos (Services/Repos): 15-contratos-servicos-repos.md
-      - Estratégia Técnica: 16-estrategia-tecnica.md
-      - Decisões de Design: 17-decisoes-design.md
-      - Estratégia de Testes: 18-estrategia-testes.md
-      - Batch Mensal (Design): 19-batch-design.md
+      - Fluxo Técnico (Consulta): 16-fluxo-tecnico-consulta.md
+      - Contratos (Services/Repos): 17-contratos-servicos-repos.md
+      - Estratégia Técnica: 18-estrategia-tecnica.md
+      - Decisões de Design: 19-decisoes-design.md
+      - Estratégia de Testes: 20-estrategia-testes.md
+      - Batch Mensal (Design): 21-batch-design.md
 
   - UX / Protótipos:
-      - Protótipos: 20-prototipos.md
+      - Protótipos: 22-prototipos.md
 
 markdown_extensions:
   - admonition

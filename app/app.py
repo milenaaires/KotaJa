@@ -3,6 +3,14 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]  # .../KotaJa
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
 from datetime import date
 from uuid import UUID
 
@@ -409,7 +417,7 @@ with tab_inicio:
     st.markdown("## Plataforma KotaJá")
     st.markdown(
         "Um MVP para **consulta pública de preços por médias mensais** (região + variante), "
-        "com trilha de auditoria (logs) e base pronta para evoluir."
+        "com trilha de auditoria e base pronta para evoluir."
     )
 
     c1, c2, c3 = st.columns(3)
@@ -430,7 +438,7 @@ with tab_inicio:
         )
 
     st.markdown("### Roadmap")
-    st.info("✅ Consulta pública • 🟠 Login (em breve) • 🟠 Backoffice (em breve) • 🟠 Batch mensal (em breve)")
+    st.info("✅ Consulta pública • 🟠 Login (em breve) • 🟠 Backoffice (em breve) • 🟠 Batch mensal")
 
 
 # =========================
@@ -438,11 +446,11 @@ with tab_inicio:
 # =========================
 with tab_consulta:
     st.markdown("## 🔎 Consulta Pública — KotaJá")
-    st.caption("Médias mensais por **região** e **variante**. Sem login.")
+    st.caption("Médias mensais por **região** e **variante**. ")
 
     top_actions = st.columns([0.70, 0.30])
     with top_actions[1]:
-        if st.button("🔧 Filtros (pop-up)", use_container_width=True, key="btn_open_filters"):
+        if st.button("🔧 Filtros", use_container_width=True, key="btn_open_filters"):
             st.session_state.open_details = False
             st.session_state.open_filters = True
             st.rerun()
@@ -504,13 +512,13 @@ with tab_consulta:
     if st.session_state.last_result:
         cols = st.columns([0.75, 0.25])
         with cols[1]:
-            if st.button("📄 Detalhes (pop-up)", use_container_width=True, key="btn_open_details"):
+            if st.button("📄 Detalhes", use_container_width=True, key="btn_open_details"):
                 st.session_state.open_filters = False
                 st.session_state.open_details = True
                 st.rerun()
 
     st.markdown("---")
-    st.markdown("### Histórico (últimas consultas)")
+    st.markdown("### Histórico")
     st.caption("Enriquecido com nomes do catálogo (região/veículo/variante).")
 
     try:

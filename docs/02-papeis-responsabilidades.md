@@ -4,13 +4,13 @@ Este documento descreve os perfis operacionais do sistema KotaJá e suas respect
 
 ---
 
-## Objetivo
+## 1. Objetivo
 
 Definir claramente as permissões, limites de atuação e interações entre os papéis do sistema, garantindo organização operacional e rastreabilidade das ações realizadas.
 
 ---
 
-## Matriz de Responsabilidades
+## 2. Matriz de Responsabilidades
 
 | Papel | Gestão de Usuários | Gestão de Catálogo | Cadastro de Loja | Aprovação de Loja | Planejamento Semanal | Registro de Preços | Consulta Pública |
 |--------|------------------|--------------------|-----------------|-----------------|---------------------|------------------|----------------|
@@ -25,7 +25,7 @@ Definir claramente as permissões, limites de atuação e interações entre os 
 
 ---
 
-## Administrador
+### 2.1 Administrador
 
 Responsável pelo controle de acesso ao sistema.
 
@@ -41,7 +41,7 @@ Responsável pelo controle de acesso ao sistema.
 
 ---
 
-## Gerente
+### 2.2 Gerente
 
 Responsável pela manutenção do catálogo global de veículos.
 
@@ -58,7 +58,7 @@ Responsável pela manutenção do catálogo global de veículos.
 
 ---
 
-## Coordenador Regional
+### 2.3 Coordenador Regional
 
 Responsável pela supervisão operacional da coleta de dados em sua região.
 
@@ -75,7 +75,7 @@ Responsável pela supervisão operacional da coleta de dados em sua região.
 
 ---
 
-## Lojista
+### 2.4 Lojista
 
 Responsável por cadastrar lojas no sistema.
 
@@ -91,7 +91,7 @@ Responsável por cadastrar lojas no sistema.
 
 ---
 
-## Pesquisador
+### 2.5 Pesquisador
 
 Responsável pela coleta de preços nas lojas designadas.
 
@@ -107,7 +107,7 @@ Responsável pela coleta de preços nas lojas designadas.
 
 ---
 
-## Usuário Público
+### 2.6 Usuário Público
 
 Responsável pela consulta das informações disponibilizadas pelo sistema.
 
@@ -120,7 +120,7 @@ Responsável pela consulta das informações disponibilizadas pelo sistema.
 
 ---
 
-## Controle de Acesso
+## 3. Controle de Acesso
 
 O sistema adotará modelo baseado em papéis (RBAC), onde cada usuário possui permissões associadas ao seu perfil operacional.
 
@@ -159,7 +159,7 @@ flowchart LR
 
 ---
 
-## Interação Entre Papéis
+## 4. Interação Entre Papéis
 
 O funcionamento do sistema depende da colaboração entre os papéis:
 

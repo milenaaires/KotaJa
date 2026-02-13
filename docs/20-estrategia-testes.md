@@ -281,7 +281,7 @@ Abrir relatório HTML:
 
 ---
 
-## 8. Observações e Próximos Passos
+## 8. Observações 
 
 ### 8.1 Melhorias futuras
 

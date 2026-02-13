@@ -4,13 +4,13 @@ Este documento apresenta os requisitos funcionais e não funcionais do sistema K
 
 ---
 
-## Objetivo
+## 1. Objetivo
 
 Estabelecer critérios claros sobre o que o sistema deve oferecer, servindo como base para a modelagem de dados, projeto técnico, testes e validação final.
 
 ---
 
-## Requisitos Funcionais
+## 2. Requisitos Funcionais
 
 ### RF01 — Gestão de usuários
 O sistema deve permitir que um administrador cadastre, ative e desative usuários com papéis definidos.
@@ -40,7 +40,7 @@ O sistema deve permitir a consulta pública de valores médios de veículos sem 
 ### RF09 — Registro de consultas públicas
 O sistema deve armazenar informações sobre todas as consultas públicas realizadas, independentemente de haver resultado.
 
-## Requisitos Não Funcionais
+## 3. Requisitos Não Funcionais
 
 ### RNF01 — Segurança
 O sistema deve restringir ações de acordo com o papel do usuário, garantindo controle de acesso baseado em perfis.
@@ -63,9 +63,7 @@ A interface pública de consulta deve ser simples, clara e acessível para usuá
 ### RNF07 — Persistência
 Os dados devem ser armazenados em banco de dados relacional, garantindo integridade e consistência.
 
-## Priorização (escopo do trabalho)
-
-## Responsáveis por requisito 
+## 4. Responsáveis por requisito 
 
 | Requisito | Papel principal |
 |---|---|

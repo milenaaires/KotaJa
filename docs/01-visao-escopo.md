@@ -2,15 +2,11 @@
   <img src="/assets/logo/logopreta.png" width="300">
 </p>
 
-Desafio Instituto Minerva
-
-Autor(a): Milena Beatriz Aires de Santana Dias
-
 Sistema de captura, organização e consulta pública de preços de veículos coletados em lojas físicas, com gerenciamento operacional por regiões e planejamento semanal de pesquisas.
 
 ---
 
-## Visão Geral
+## 1. Visão Geral
 
 O **KotaJá** é um sistema projetado para registrar valores reais praticados por lojas na venda de veículos e disponibilizar essas informações através de consultas públicas.
 
@@ -18,7 +14,7 @@ O sistema organiza o processo de coleta de dados por meio de papéis operacionai
 
 ---
 
-## Objetivo do Sistema
+## 2. Objetivo do Sistema
 
 O objetivo principal do KotaJá é:
 
@@ -30,7 +26,7 @@ O objetivo principal do KotaJá é:
 
 ---
 
-## Papéis do Sistema
+## 3. apéis do Sistema
 
 O sistema possui diferentes papéis operacionais responsáveis pela manutenção e qualidade das informações.
 
@@ -54,7 +50,7 @@ O sistema possui diferentes papéis operacionais responsáveis pela manutenção
 
 ---
 
-## Funcionamento Geral do Sistema
+## 4. Funcionamento Geral do Sistema
 
 O fluxo principal do sistema ocorre da seguinte forma:
 
@@ -85,7 +81,7 @@ flowchart LR
 
 ---
 
-## Escopo do Projeto
+## 5. Escopo do Projeto
 
 ### Incluído no Projeto
 
@@ -99,14 +95,14 @@ flowchart LR
 
 ---
 
-## Premissas Técnicas
+## 6. Premissas Técnicas
 
 O projeto será desenvolvido utilizando:
 
-- Banco de dados relacional
+- Banco de dados online Neon
 - Interface pública desenvolvida com Streamlit
 - Controle de versão com GitHub
 - Documentação publicada via GitHub Pages
-- Protótipos desenvolvidos no Figma
+- Protótipos desenvolvidos em HTML
 
 ---
